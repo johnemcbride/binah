@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const useCameras = (): MediaDeviceInfo[] => {
   const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]);
 
   useEffect(() => {
     (async () => {
+      await navigator.mediaDevices.getUserMedia();
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.filter(
-        (device) => device.kind === 'videoinput',
+        (device) => device.kind === "videoinput"
       );
       videoDevices && setCameras(videoDevices);
     })();
