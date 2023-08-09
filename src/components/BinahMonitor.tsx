@@ -257,7 +257,8 @@ const BinahMonitor = ({
                 muted={true}
              playsInline={true}
                 autoPlay={true}
-                isMobile={isMobile()}
+                isMobile={isMobile()
+                }
               />
             </VideoWrapper>
             {(isMeasuring()

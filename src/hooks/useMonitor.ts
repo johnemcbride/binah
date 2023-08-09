@@ -96,8 +96,10 @@ const useMonitor = (
         console.log(newSession);
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get("redirectUrl");
-        window.location.href =
-          redirectUrl + "?binahSession=" + newSession.data.createSession.id;
+        if (redirectUrl != "") {
+          window.location.href =
+            redirectUrl + "?binahSession=" + newSession.data.createSession.id;
+        }
       } catch (err) {
         console.log("failyure");
         console.log(err);
