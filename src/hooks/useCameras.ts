@@ -10,6 +10,7 @@ const useCameras = (): MediaDeviceInfo[] => {
         video: { facingMode: "user" },
       });
       const devices = await navigator.mediaDevices.enumerateDevices();
+      console.log(JSON.stringify(devices));
       const videoDevices = devices.filter(
         (device) => device.kind === "videoinput"
       );

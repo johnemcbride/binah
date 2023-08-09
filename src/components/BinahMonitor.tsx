@@ -259,6 +259,7 @@ const BinahMonitor = ({
                 id="video"
                 muted={true}
                 playsInline={true}
+                autoPlay={true}
                 isMobile={isMobile()}
               />
             </VideoWrapper>
