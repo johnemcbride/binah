@@ -94,8 +94,10 @@ const useMonitor = (
         });
 
         console.log(newSession);
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get("redirectUrl");
         window.location.href =
-          "https://google.com?query=" + newSession.data.createSession.id;
+          redirectUrl + "?binahSession=" + newSession.data.createSession.id;
       } catch (err) {
         console.log("failyure");
         console.log(err);
