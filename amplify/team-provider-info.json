@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-binah-dev-105022-authRole",
+      "UnauthRoleArn": "arn:aws:iam::297915957903:role/amplify-binah-dev-105022-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::297915957903:role/amplify-binah-dev-105022-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-binah-dev-105022-deployment",
+      "UnauthRoleName": "amplify-binah-dev-105022-unauthRole",
+      "StackName": "amplify-binah-dev-105022",
+      "StackId": "arn:aws:cloudformation:eu-west-2:297915957903:stack/amplify-binah-dev-105022/298cc960-369a-11ee-bec6-02d2f5947784",
+      "AmplifyAppId": "d2bjm5j6ke1c0j"
+    }
+  }
+}
