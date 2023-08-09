@@ -237,6 +237,8 @@ const BinahMonitor = ({
   return (
     <>
       <TopBar onSettingsClick={onSettingsClick} isMeasuring={isMeasuring()} />
+      <h1>
+    Mobile: {mobile}</h1>
       <MonitorWrapper isSettingsOpen={isSettingsOpen}>
         <MeasurementContentWrapper isMobile={mobile}>
           <InfoBarWrapper>
