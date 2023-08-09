@@ -5,7 +5,10 @@ const useCameras = (): MediaDeviceInfo[] => {
 
   useEffect(() => {
     (async () => {
-      await navigator.mediaDevices.getUserMedia();
+      await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: true,
+      });
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.filter(
         (device) => device.kind === "videoinput"
