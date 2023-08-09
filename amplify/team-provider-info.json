@@ -17,6 +17,12 @@
           "appId": "d2bjm5j6ke1c0j",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "binah6d47308a": {}
+      },
+      "api": {
+        "binah": {}
       }
     }
   }

@@ -1,0 +1,12 @@
+type Session
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: public, provider: iam, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  patientBio: AWSJSON
+  diagnosticsMarkers: AWSJSON
+}
