@@ -241,6 +241,15 @@ const BinahMonitor = ({
     Mobile: {mobile}</h1>
     <h1>
     Desktop: {desktop}</h1>
+
+    <h1>
+   Session: {sessionState}</h1>
+
+   <h1>
+   VS: {JSON.stringify(vitalSigns)}</h1>
+
+   <h1>
+   isMeasuring: {JSON.stringify(isMeasuring())}</h1>
       <MonitorWrapper isSettingsOpen={isSettingsOpen}>
         <MeasurementContentWrapper isMobile={mobile}>
           <InfoBarWrapper>
@@ -258,7 +267,7 @@ const BinahMonitor = ({
                 ref={video}
                 id="video"
                 muted={true}
-                playsInline={true}
+             
                 autoPlay={true}
                 isMobile={isMobile()}
               />

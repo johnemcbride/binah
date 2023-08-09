@@ -1,6 +1,6 @@
 import { createLocalStorageStateHook } from "use-local-storage-state";
 
-export const DEFAULT_MEASUREMENT_DURATION = 30;
+export const DEFAULT_MEASUREMENT_DURATION = 20;
 export const MIN_MEASUREMENT_DURATION = 20;
 export const MAX_MEASUREMENT_DURATION = 180;
 

@@ -4,7 +4,7 @@ import {
   useEffect,
   useRef,
   useState,
-} from 'react';
+} from "react";
 import monitor, {
   AlertData,
   DeviceOrientation,
@@ -16,8 +16,14 @@ import monitor, {
   SessionState,
   VitalSigns,
   VitalSignsResults,
-} from '@binah/web-sdk';
-import { InfoType, InfoData } from '../types';
+} from "@binah/web-sdk";
+import { InfoType, InfoData } from "../types";
+
+// import { GraphQLQuery } from "@aws-amplify/api";
+// import { API } from "aws-amplify";
+
+// import { CreateSessionInput, CreateSessionMutation } from "../../API";
+// import * as mutations from "../graphql/mutations";
 
 const useMonitor = (
   video: MutableRefObject<HTMLVideoElement>,
@@ -25,17 +31,15 @@ const useMonitor = (
   processingTime: number,
   licenseKey: string,
   productId: string,
-  startMeasuring: boolean,
+  startMeasuring: boolean
 ) => {
   const [session, setSession] = useState<HealthMonitorSession>();
   const [sessionState, setSessionState] = useState<SessionState>();
   const [isMonitorReady, setIsMonitorReady] = useState<boolean>();
-  const [enabledVitalSigns, setEnabledVitalSigns] = useState<
-    EnabledVitalSigns
-  >();
-  const [offlineMeasurements, setOfflineMeasurements] = useState<
-    OfflineMeasurements
-  >();
+  const [enabledVitalSigns, setEnabledVitalSigns] =
+    useState<EnabledVitalSigns>();
+  const [offlineMeasurements, setOfflineMeasurements] =
+    useState<OfflineMeasurements>();
   const [vitalSigns, setVitalSigns] = useState<VitalSigns | null>();
 
   const [error, setError] = useState<AlertData>({ code: -1 });
@@ -56,7 +60,7 @@ const useMonitor = (
         }
       }
     },
-    [InfoType, setInfo, info, isDismissing, isDismissing.current],
+    [InfoType, setInfo, info, isDismissing, isDismissing.current]
   );
 
   const updateVitalSigns = useCallback((vitalSigns) => {
@@ -70,9 +74,24 @@ const useMonitor = (
     updateVitalSigns(vitalSign);
   }, []);
 
-  const onFinalResults = useCallback((vitalSignsResults: VitalSignsResults) => {
-    updateVitalSigns(vitalSignsResults.results);
-  }, []);
+  const onFinalResults = useCallback(
+    async (vitalSignsResults: VitalSignsResults) => {
+      updateVitalSigns(vitalSignsResults.results);
+      console.log(JSON.stringify(vitalSignsResults));
+      // {"results":{"heartRate":{"value":57,"confidenceLevel":3},"wellnessLevel":{"value":3},"wellnessIndex":{"value":10}}}
+
+      //
+      // post observations back to session
+      //
+      // const newSession = await API.graphql<GraphQLQuery<CreateSessionMutation>>(
+      //   {
+      //     query: mutations.createSession,
+      //     variables: { input: { diagnosticMarkers: vitalSignsResults } },
+      //   }
+      // );
+    },
+    []
+  );
 
   const onError = (errorData: AlertData) => {
     setError(errorData);
@@ -113,7 +132,7 @@ const useMonitor = (
     (offlineMeasurements: OfflineMeasurements) => {
       setOfflineMeasurements(offlineMeasurements);
     },
-    [],
+    []
   );
 
   const onActivation = useCallback((activationId: string) => {
@@ -124,7 +143,7 @@ const useMonitor = (
     if (!isRect) {
       setInfo({
         type: InfoType.INSTRUCTION,
-        message: 'Face not detected',
+        message: "Face not detected",
       });
     } else {
       setInfoWithDismiss({ type: InfoType.NONE });
@@ -146,7 +165,7 @@ const useMonitor = (
         setIsMonitorReady(true);
         setError({ code: -1 });
       } catch (e) {
-        console.error('Error initializing HealthMonitor', e);
+        console.error("Error initializing HealthMonitor", e);
         setIsMonitorReady(false);
         setError({ code: e.errorCode });
       }
@@ -192,7 +211,7 @@ const useMonitor = (
         setError({ code: -1 });
       } catch (e) {
         setError({ code: e.errorCode });
-        console.error('Error creating a session', e);
+        console.error("Error creating a session", e);
       }
     })();
   }, [processingTime, isMonitorReady]);
