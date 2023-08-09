@@ -255,7 +255,7 @@ const BinahMonitor = ({
                 ref={video}
                 id="video"
                 muted={true}
-             
+             playsInline={true}
                 autoPlay={true}
                 isMobile={isMobile()}
               />
