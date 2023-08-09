@@ -7,7 +7,7 @@ const useCameras = (): MediaDeviceInfo[] => {
     (async () => {
       await navigator.mediaDevices.getUserMedia({
         audio: false,
-        video: true,
+        video: { facingMode: "user" },
       });
       const devices = await navigator.mediaDevices.enumerateDevices();
       const videoDevices = devices.filter(
