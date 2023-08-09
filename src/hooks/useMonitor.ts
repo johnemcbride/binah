@@ -19,11 +19,10 @@ import monitor, {
 } from "@binah/web-sdk";
 import { InfoType, InfoData } from "../types";
 
-// import { GraphQLQuery } from "@aws-amplify/api";
-// import { API } from "aws-amplify";
-
-// import { CreateSessionInput, CreateSessionMutation } from "../../API";
-// import * as mutations from "../graphql/mutations";
+import { GraphQLQuery } from "@aws-amplify/api";
+import { API } from "aws-amplify";
+import { CreateSessionInput, CreateSessionMutation } from "../../API";
+import * as mutations from "../graphql/mutations";
 
 const useMonitor = (
   video: MutableRefObject<HTMLVideoElement>,
@@ -83,12 +82,24 @@ const useMonitor = (
       //
       // post observations back to session
       //
-      // const newSession = await API.graphql<GraphQLQuery<CreateSessionMutation>>(
-      //   {
-      //     query: mutations.createSession,
-      //     variables: { input: { diagnosticMarkers: vitalSignsResults } },
-      //   }
-      // );
+      try {
+        const newSession = await API.graphql<
+          GraphQLQuery<CreateSessionMutation>
+        >({
+          query: mutations.createSession,
+          variables: {
+            input: { diagnosticsMarkers: JSON.stringify(vitalSignsResults) },
+          },
+          authMode: "AWS_IAM",
+        });
+
+        console.log(newSession);
+        window.location.href =
+          "https://google.com?query=" + newSession.data.createSession.id;
+      } catch (err) {
+        console.log("failyure");
+        console.log(err);
+      }
     },
     []
   );

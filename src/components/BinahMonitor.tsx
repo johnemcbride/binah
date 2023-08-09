@@ -237,19 +237,7 @@ const BinahMonitor = ({
   return (
     <>
       <TopBar onSettingsClick={onSettingsClick} isMeasuring={isMeasuring()} />
-      <h1>
-    Mobile: {mobile}</h1>
-    <h1>
-    Desktop: {desktop}</h1>
-
-    <h1>
-   Session: {sessionState}</h1>
-
-   <h1>
-   VS: {JSON.stringify(vitalSigns)}</h1>
-
-   <h1>
-   isMeasuring: {JSON.stringify(isMeasuring())}</h1>
+   
       <MonitorWrapper isSettingsOpen={isSettingsOpen}>
         <MeasurementContentWrapper isMobile={mobile}>
           <InfoBarWrapper>

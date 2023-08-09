@@ -6,10 +6,10 @@ import { Flex } from './shared/Flex';
 import { useCameras, useDisableZoom } from '../hooks';
 import UAParser from 'ua-parser-js';
 import {Amplify}  from "aws-amplify";
-//const awsExports = require('../aws-exports').default;
+const awsExports = require('../aws-exports').default;
 //console.log(awsExports)
 
-//Amplify.configure(awsExports);
+Amplify.configure(awsExports);
 
 const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
   height: 100%;
