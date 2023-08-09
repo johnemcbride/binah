@@ -13,7 +13,7 @@ const Wrapper = styled(Flex)`
   min-height: 60px;
   z-index: 2;
   box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
-  background: #01061b;
+  background: #1d70b8;
   ${media.tablet`
     padding-left: 100px;
 `}

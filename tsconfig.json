@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     // 
     
-    
+    "moduleResolution": "node",
     "target": "esnext",
     // "lib": ["es5", "dom"],
     // "sourceMap": true,

@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     background: #f1f4f9;
-    font-family: Rubik, Segoe UI, sans-serif;
+    font-family: Frutiger, Arial,  sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input {
-    font-family: Rubik, Segoe UI, sans-serif;
+    font-family: Frutiger, Arial,  sans-serif;
   }
 
   input::-webkit-outer-spin-button,
@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
-    font-family: Rubik, Segoe UI, sans-serif;
+    font-family: Frutiger, Arial,  sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6, p {
