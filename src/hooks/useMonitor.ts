@@ -100,47 +100,47 @@ const useMonitor = (
           window.location.href =
             redirectUrl +
             "?heartRate=" +
-            +vitalSignsResults.results.heartRate.value +
+            +vitalSignsResults.results.heartRate?.value +
             "&wellnessIndex=" +
-            vitalSignsResults.results.wellnessIndex.value +
+            vitalSignsResults.results.wellnessIndex?.value +
             "&wellnessLevel=" +
-            vitalSignsResults.results.wellnessLevel.value +
+            vitalSignsResults.results.wellnessLevel?.value +
             "&bloodPressure=" +
-            vitalSignsResults.results.bloodPressure.value +
+            vitalSignsResults.results.bloodPressure?.value +
             "&breathingRate=" +
-            vitalSignsResults.results.breathingRate.value +
+            vitalSignsResults.results.breathingRate?.value +
             "&hemoglobin=" +
-            vitalSignsResults.results.hemoglobin.value +
+            vitalSignsResults.results.hemoglobin?.value +
             "&hemoglobinA1c=" +
-            vitalSignsResults.results.hemoglobinA1c.value +
+            vitalSignsResults.results.hemoglobinA1c?.value +
             "&lfhf=" +
-            vitalSignsResults.results.lfhf.value +
+            vitalSignsResults.results.lfhf?.value +
             "&meanRri=" +
-            vitalSignsResults.results.meanRri.value +
+            vitalSignsResults.results.meanRri?.value +
             "&pnsZone=" +
-            vitalSignsResults.results.pnsZone.value +
+            vitalSignsResults.results.pnsZone?.value +
             "&prq=" +
-            vitalSignsResults.results.prq.value +
+            vitalSignsResults.results.prq?.value +
             "&rmssd=" +
-            vitalSignsResults.results.rmssd.value +
+            vitalSignsResults.results.rmssd?.value +
             "&sd1=" +
-            vitalSignsResults.results.sd1.value +
+            vitalSignsResults.results.sd1?.value +
             "&sd2=" +
-            vitalSignsResults.results.sd2.value +
+            vitalSignsResults.results.sd2?.value +
             "&sdnn=" +
-            vitalSignsResults.results.sdnn.value +
+            vitalSignsResults.results.sdnn?.value +
             "&snsIndex=" +
-            vitalSignsResults.results.snsIndex.value +
+            vitalSignsResults.results.snsIndex?.value +
             "&snsZone=" +
-            vitalSignsResults.results.snsZone.value +
+            vitalSignsResults.results.snsZone?.value +
             "&stressIndex=" +
-            vitalSignsResults.results.stressIndex.value +
+            vitalSignsResults.results.stressIndex?.value +
             "&snsZone=" +
-            vitalSignsResults.results.snsZone.value +
+            vitalSignsResults.results.snsZone?.value +
             "&stressIndex=" +
-            vitalSignsResults.results.stressIndex.value +
+            vitalSignsResults.results.stressIndex?.value +
             "&stressLevel=" +
-            vitalSignsResults.results.stressLevel.value;
+            vitalSignsResults.results.stressLevel?.value;
         }
       } catch (err) {
         console.log("failyure");
