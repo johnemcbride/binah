@@ -98,8 +98,8 @@ const useMonitor = (
         const redirectUrl = urlParams.get("redirectUrl");
         if (redirectUrl != null) {
           window.location.href =
-            redirectUrl + "?" + newSession.data.createSession.id;
-          "&heartRate=" +
+            redirectUrl +
+            "?heartRate=" +
             +vitalSignsResults.results.heartRate.value +
             "&wellnessIndex=" +
             vitalSignsResults.results.wellnessIndex.value +
