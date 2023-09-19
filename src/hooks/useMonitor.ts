@@ -106,8 +106,8 @@ const useMonitor = (
             (vitalSignsResults.results.wellnessIndex?.value || "") +
             "&wellnessLevel=" +
             (vitalSignsResults.results.wellnessLevel?.value || "") +
-            "&bloodPressure=" + 
-            bloodPressure +
+            "&bloodPressure='" + 
+            bloodPressure + "'" +
             "&breathingRate=" +
             (vitalSignsResults.results.breathingRate?.value || "") +
             "&hemoglobin=" +
