@@ -97,6 +97,7 @@ const useMonitor = (
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get("redirectUrl");
         const bloodPressure = vitalSignsResults.results.bloodPressure?.value ?  "'"  + JSON.stringify(vitalSignsResults.results.bloodPressure?.value) + "'" : ''
+        const modifiedBpString = bloodPressure ? bloodPressure['systolic'] + ' over ' +  bloodPressure['diastolic'] : ''
         if (redirectUrl != null) {
           window.location.href =
             redirectUrl +
@@ -107,7 +108,7 @@ const useMonitor = (
             "&wellnessLevel=" +
             (vitalSignsResults.results.wellnessLevel?.value || "") +
             "&bloodPressure=" + 
-            bloodPressure +
+            modifiedBpString +
             "&breathingRate=" +
             (vitalSignsResults.results.breathingRate?.value || "") +
             "&hemoglobin=" +
