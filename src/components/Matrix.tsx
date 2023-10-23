@@ -262,7 +262,7 @@ const Matrix = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.RED}> <Span> CVPU </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Temperature {'('}&deg;{'C}'} </Span></MatrixCol>
+                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Temperature {'('}&deg;{'C)'} </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> <Span> &le;35.0 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 35.1-36.0 </Span></MatrixCol>
