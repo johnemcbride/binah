@@ -12,8 +12,10 @@ enum COLOR {
 const MatrixContainer = styled.div`
     border: 1px solid #ccc;
     margin: 20px 0;
+    font-size: 12px;
     ${media.mobile`
          min-width: 600px;
+         font-size: 16px;
     `}
 `;
 
@@ -37,7 +39,10 @@ const MatrixCol = styled.div<{ align?: string, basis?:string, color?:string }>`
 
 
 const Span = styled.span`
-    
+    word-break: break-all;
+    ${media.mobile`
+        word-break: unset;
+    `}
 `;
 const Overlay = styled.span`
     position: absolute;
