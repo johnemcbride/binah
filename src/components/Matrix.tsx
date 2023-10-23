@@ -23,7 +23,7 @@ const MatrixRow = styled.div`
     display: flex;
     flex-flow: row wrap;
 `;
-const MatrixCol = styled.div<{ align?: string, basis?:string, color?:string }>`
+const MatrixCol = styled.div<{ align?: string, basis?:string, color?:string, border?:string }>`
     // flex: 1;
     // flex-basis: ${({ basis }) => basis || 0};
     width: calc(90% / 8);
@@ -31,6 +31,7 @@ const MatrixCol = styled.div<{ align?: string, basis?:string, color?:string }>`
     text-align: ${({ align }) => align=='left' ? 'left' : 'center'};
     padding: 10px;
     border: 1px solid #ccc;
+    border: ${({ border }) => border};
     background-color: ${({ color }) => color || 'white'};
     color: ${({ color }) => color === COLOR.BLUE ? 'white' : 'black'};
     position: relative;
@@ -39,20 +40,17 @@ const MatrixCol = styled.div<{ align?: string, basis?:string, color?:string }>`
 
 
 const Span = styled.span`
-    word-break: break-all;
-    ${media.mobile`
-        word-break: unset;
-    `}
+   
 `;
 const Overlay = styled.span`
     position: absolute;
     content: ' ';
     display: block;
-    width: 90%;
-    height: 90%;
     border: 2px solid red;
     left: 0;
     top: 0;
+    right: 0;
+    bottom: 0;
 `;
 const FinalScore = styled.p`
     margin: 10px 0;
@@ -186,12 +184,22 @@ const Matrix = ({vitalSigns}) => {
     return (
         <>
         <MatrixContainer>
+        <MatrixRow>
+                <MatrixCol border="none" align="left" basis='21%' color={COLOR.BLUE}> <Span>  </Span></MatrixCol>
+                <MatrixCol  border="none" color={COLOR.BLUE}> <Span>  </Span></MatrixCol>
+                <MatrixCol   border="none" color={COLOR.BLUE}> <Span> </Span></MatrixCol>
+                <MatrixCol  border="none" color={COLOR.BLUE}> <Span> </Span></MatrixCol>
+                <MatrixCol  border="none" color={COLOR.BLUE}> <Span> Score </Span></MatrixCol>
+                <MatrixCol  border="none" color={COLOR.BLUE}> <Span> </Span></MatrixCol>
+                <MatrixCol  border="none"  color={COLOR.BLUE}> <Span> </Span></MatrixCol>
+                <MatrixCol  border="none" color={COLOR.BLUE}> <Span>  </Span></MatrixCol>
+            </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%' color={COLOR.BLUE}> <Span> Physiological parameter </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 3 </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 2 </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 1 </Span></MatrixCol>
-                <MatrixCol  color={COLOR.BLUE}> <Span> Score <br/>0 </Span></MatrixCol>
+                <MatrixCol  color={COLOR.BLUE}> <Span> 0 </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 1 </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 2 </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 3 </Span></MatrixCol>
@@ -207,7 +215,7 @@ const Matrix = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.RED}>{bRMP===3 && <Overlay />} <Span> &ge;25 </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub>Scale 1 (%) </Span></MatrixCol>
+                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub> Scale 1 (%) </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> <Span> &le;91 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> 92-93 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 94-95 </Span></MatrixCol>
@@ -217,7 +225,7 @@ const Matrix = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub>Scale 2 (%) </Span></MatrixCol>
+                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub> Scale 2 (%) </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> <Span> &le;83 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> 84-85 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 86-87 </Span></MatrixCol>
