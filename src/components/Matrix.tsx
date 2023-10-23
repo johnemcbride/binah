@@ -193,7 +193,7 @@ const Matrix = ({vitalSigns}) => {
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Respiration rate <br/> (per minute) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> {bRMP===-3 && <Overlay />} <Span> {'≤'}8 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> {bRMP===-3 && <Overlay />} <Span> &le;8 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}>{bRMP===-1 && <Overlay />} <Span> 9-11 </Span></MatrixCol>
                 <MatrixCol>{bRMP===0 && <Overlay />} <Span> 12-20 </Span></MatrixCol>
