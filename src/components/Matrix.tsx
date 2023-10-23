@@ -199,27 +199,27 @@ const Matrix = ({vitalSigns}) => {
                 <MatrixCol>{bRMP===0 && <Overlay />} <Span> 12-20 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}>{bRMP===2 && <Overlay />} <Span> 21-24 </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}>{bRMP===3 && <Overlay />} <Span> {'≥'}25 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}>{bRMP===3 && <Overlay />} <Span> &ge;25 </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub>Scale 1 (%) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {'≤'}91 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> <Span> &le;91 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> 92-93 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 94-95 </Span></MatrixCol>
-                <MatrixCol> <Span> {'≥'}96 </Span></MatrixCol>
+                <MatrixCol> <Span> &ge;96 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub>Scale 2 (%) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {'≤'}83 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> <Span> &le;83 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> 84-85 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 86-87 </Span></MatrixCol>
-                <MatrixCol> <Span> 88-92<br/>{'≥'}93 on air </Span></MatrixCol>
+                <MatrixCol> <Span> 88-92<br/>&ge;93 on air </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 93-94 on<br/>oxygen </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> 95-96 on<br/>oxygen </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {'≥'}97 on<br/>oxygen </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> <Span> &ge;97 on<br/>oxygen </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Air or oxygen? </Span></MatrixCol>
@@ -233,23 +233,23 @@ const Matrix = ({vitalSigns}) => {
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Systolic blood pressure (mmHg) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> {bpMP===-3 && <Overlay />}<Span> {'≤'}90 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> {bpMP===-3 && <Overlay />}<Span> &le;90 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}>{bpMP===-2 && <Overlay />} <Span> 91-100 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}>{bpMP===-1 && <Overlay />} <Span> 101-110 </Span></MatrixCol>
                 <MatrixCol>{bpMP===0 && <Overlay />} <Span> 111-219 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}><Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> {bpMP===3 && <Overlay />}<Span> {'≥'}220 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> {bpMP===3 && <Overlay />}<Span> &ge;220 </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Pulse (per minute) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> {hRMP===-3 && <Overlay />} <Span> {'≤'}40 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> {hRMP===-3 && <Overlay />} <Span> &le;40 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}>{hRMP===-1 && <Overlay />} <Span> 41-50 </Span></MatrixCol>
                 <MatrixCol>{hRMP===0 && <Overlay />} <Span> 51-90 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}>{hRMP===1 && <Overlay />} <Span> 91-110 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}>{hRMP===2 && <Overlay />} <Span> 111-130 </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}>{hRMP===3 && <Overlay />} <Span> {'≥'}131 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}>{hRMP===3 && <Overlay />} <Span> &ge;131 </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Consciousness </Span></MatrixCol>
@@ -262,13 +262,13 @@ const Matrix = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.RED}> <Span> CVPU </Span></MatrixCol>
             </MatrixRow>
             <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Temperature {'(°C)'} </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {'≤'}35.0 </Span></MatrixCol>
+                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Temperature {'('}&deg;{'C}'} </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> <Span> &le;35.0 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 35.1-36.0 </Span></MatrixCol>
                 <MatrixCol> <Span> 36.1-38.0 </Span></MatrixCol>
                 <MatrixCol color={COLOR.YELLOW}> <Span> 38.1-39.0 </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> {'≥'}39.1 </Span></MatrixCol>
+                <MatrixCol color={COLOR.ORANGE}> <Span> &ge;39.1 </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
             </MatrixRow>
         </MatrixContainer>
