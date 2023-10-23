@@ -35,6 +35,7 @@ import Loader from './Loader';
 import { VideoReadyState } from '../types';
 import TopBar from './TopBar';
 import Mask from '../assets/mask.svg';
+import Matrix from './Matrix';
 
 const MonitorWrapper = styled(Flex)<{ isSettingsOpen: boolean }>`
   flex-direction: column;
@@ -137,6 +138,13 @@ const InfoBarWrapper = styled.div`
     flex: 0.45;
   `}
 `;
+const NextButton = styled.button`
+  background: #1d70b8;
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+`;
 
 const BinahMonitor = ({
   showMonitor,
@@ -154,6 +162,7 @@ const BinahMonitor = ({
     false,
   );
   const [startMeasuring, setStartMeasuring] = useState<boolean>(false);
+  const [showResults, setShowResults] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loadingTimeoutPromise, setLoadingTimeoutPromise] = useState<number>();
   const isPageVisible = usePageVisibility();
@@ -167,6 +176,7 @@ const BinahMonitor = ({
     error,
     warning,
     info,
+    finalUrl
   } = useMonitor(
     video,
     cameraId,
@@ -178,6 +188,9 @@ const BinahMonitor = ({
   const prevSessionState = usePrevious(sessionState);
   const errorMessage = useError(error);
   const warningMessage = useWarning(warning);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const news = urlParams.get("news");
 
   const isMeasuring = useCallback(
     () => sessionState === SessionState.MEASURING,
@@ -225,6 +238,9 @@ const BinahMonitor = ({
       setStartMeasuring(false);
       setIsLoading(false);
     }
+    if(sessionState === SessionState.STOPPING && news=='true'){
+      setShowResults(true)
+    }
   }, [errorMessage, sessionState, isPageVisible]);
 
   useEffect(() => {
@@ -248,6 +264,13 @@ const BinahMonitor = ({
               offlineMeasurements={offlineMeasurements}
             />
           </InfoBarWrapper>
+          {showResults ? (
+            <div>
+             <Matrix vitalSigns={vitalSigns}/>
+              <NextButton onClick={()=>  window.location.href = finalUrl}>Next</NextButton>
+            </div>
+          ) :
+          <>
           <VideoAndStatsWrapper isMobile={mobile}>
             <VideoWrapper>
               <Img src={Mask} isDesktop={desktop} />
@@ -282,6 +305,8 @@ const BinahMonitor = ({
               onClick={handleButtonClick}
             />
           </ButtonWrapper>
+          </>
+          }
         </MeasurementContentWrapper>
       </MonitorWrapper>
     </>

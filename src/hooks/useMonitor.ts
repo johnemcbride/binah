@@ -45,6 +45,7 @@ const useMonitor = (
   const [warning, setWarning] = useState<AlertData>({ code: -1 });
   const [info, setInfo] = useState<InfoData>({ type: InfoType.NONE });
   const isDismissing = useRef<boolean>(false);
+  const [finalUrl,setFinalUrl] = useState<string>('')
 
   const setInfoWithDismiss = useCallback(
     (info: InfoData, seconds?: number) => {
@@ -96,10 +97,11 @@ const useMonitor = (
         console.log(newSession);
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get("redirectUrl");
+        const news = urlParams.get("news");
         const bloodPressure = vitalSignsResults.results.bloodPressure?.value ?  vitalSignsResults.results.bloodPressure?.value : ''
         const modifiedBpString = bloodPressure ? bloodPressure['systolic'] + ' over ' +  bloodPressure['diastolic'] : ''
         if (redirectUrl != null) {
-          window.location.href =
+          const updatedUrl =
             redirectUrl +
             "?heartRate=" +
             +(vitalSignsResults.results.heartRate?.value || "") +
@@ -143,6 +145,12 @@ const useMonitor = (
             (vitalSignsResults.results.stressIndex?.value || "") +
             "&stressLevel=" +
             (vitalSignsResults.results.stressLevel?.value || "");
+            if(news && news == 'true') {
+              setFinalUrl(updatedUrl)
+            }
+            else{
+              window.location.href = updatedUrl
+            }
         }
       } catch (err) {
         console.log("failyure");
@@ -318,6 +326,7 @@ const useMonitor = (
     error,
     warning,
     info,
+    finalUrl
   };
 };
 
