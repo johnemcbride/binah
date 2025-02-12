@@ -1,0 +1,437 @@
+I have a react app with the details of code and structure below.
+
+I am not used to home cooked ts config and wbepack config, i'd like to run this app using a lighter weight simple wrapper like vite.
+
+Can you recommend how to convert to a simple vite setup, so i can run it locally.
+
+Then advise how i wrap the main app component in a three page flow:
+
+1) welcome page, then when you click start brings you onto main page with the app
+2) the main page
+3) capture outputs from the main App and siplay results in next page
+
+
+{
+  "compilerOptions": {
+    // "skipLibCheck": true,
+     "allowJs": true,
+    // "module": "commonjs",
+    "declaration": true,
+    // "removeComments": true,
+    // "emitDecoratorMetadata": true,
+    // "experimentalDecorators": true,
+    // "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // 
+    
+    "moduleResolution": "node",
+    "target": "esnext",
+    // "lib": ["es5", "dom"],
+    // "sourceMap": true,
+    // "outDir": "./dist",
+    // "baseUrl": "./src",
+    // "incremental": true,
+    "resolveJsonModule": true,
+    // "types": ["react", "node"],
+    
+    "jsx": "react"
+  }, "include": ["src/**/*"],
+}
+
+
+the overall directory structure is this
+
+├── ,
+├── 2.09.md
+├── API.ts
+├── binah-web-sdk-v4.12.1-8.tgz
+├── package-lock.json
+├── package.json
+├── prompt
+├── src
+│   ├── assets
+│   │   ├── cancel.svg
+│   │   ├── error-icon.svg
+│   │   ├── heart-big.svg
+│   │   ├── heart-disabled.svg
+│   │   ├── logo.svg
+│   │   ├── mask.svg
+│   │   ├── no-stats-black.svg
+│   │   ├── no-stats.svg
+│   │   ├── play-big.svg
+│   │   ├── settings-hamburger.svg
+│   │   ├── settings.svg
+│   │   ├── stop.svg
+│   │   └── visibility.svg
+│   ├── components
+│   │   ├── App.tsx
+│   │   ├── BinahMonitor.tsx
+│   │   ├── InfoBar.tsx
+│   │   ├── Loader.tsx
+│   │   ├── Logo.tsx
+│   │   ├── Matrix.tsx
+│   │   ├── OverlayCanvas.tsx
+│   │   ├── PasswordInput.tsx
+│   │   ├── SettingsBars.tsx
+│   │   ├── SettingsButton.tsx
+│   │   ├── SettingsDropDown.tsx
+│   │   ├── SettingsItem.tsx
+│   │   ├── Spinner.tsx
+│   │   ├── StartButton.tsx
+│   │   ├── Stats.tsx
+│   │   ├── StatsBox.tsx
+│   │   ├── Timer.tsx
+│   │   ├── TopBar.tsx
+│   │   ├── alert
+│   │   │   ├── ErrorAlert.tsx
+│   │   │   ├── InfoAlert.tsx
+│   │   │   ├── WarningAlert.tsx
+│   │   │   └── index.ts
+│   │   └── shared
+│   │       ├── CloseButton.tsx
+│   │       ├── Flex.tsx
+│   │       └── FlexSpace.tsx
+│   ├── favicon.ico
+│   ├── globals.ts
+│   ├── hooks
+│   │   ├── index.ts
+│   │   ├── useCameras.ts
+│   │   ├── useDisableZoom.ts
+│   │   ├── useError.ts
+│   │   ├── useLicenseDetails.ts
+│   │   ├── useMonitor.ts
+│   │   ├── usePageVisibility.ts
+│   │   ├── usePrevious.ts
+│   │   ├── useTimer.ts
+│   │   └── useWarning.ts
+│   ├── index.html
+│   ├── index.tsx
+│   ├── style
+│   │   ├── global.ts
+│   │   ├── media.ts
+│   │   └── mirror.tsx
+│   └── types.ts
+├── tsconfig.json
+└── webpack.config.jsimport React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import BinahMonitor from './BinahMonitor';
+import SettingsBars from './SettingsBars';
+import { Flex } from './shared/Flex';
+import { useCameras, useDisableZoom } from '../hooks';
+import UAParser from 'ua-parser-js';
+
+const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  background-color: ${({ isSettingsOpen }) =>
+    isSettingsOpen && 'rgba(0, 0, 0, 0.5)'};
+`;
+
+const App = () => {
+  const cameras = useCameras();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [cameraId, setCameraId] = useState<string>();
+  const [isLicenseValid, setIsLicenseValid] = useState(false);
+  const [isMobile] = useState(
+    UAParser(navigator.userAgent).device.type === 'mobile',
+  );
+  useDisableZoom();
+
+  const onSettingsClickedHandler = useCallback((event) => {
+    const settingsBars = document.getElementById('settingsBars');
+    const isSettingsButtonClicked = event.target.id === 'settingsButton';
+
+    const isInsideSettingsClicked =
+      settingsBars.contains(event.target as Node) || isSettingsButtonClicked;
+
+    if (!isInsideSettingsClicked) {
+      setIsSettingsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', onSettingsClickedHandler);
+    return () => {
+      document.removeEventListener('click', onSettingsClickedHandler);
+    };
+  }, []);
+
+  const updateLicenseStatus = useCallback((valid) => {
+    setIsLicenseValid(valid);
+  }, []);
+
+  const toggleSettingsClick = useCallback(() => {
+    setIsSettingsOpen(!isSettingsOpen);
+  }, [isSettingsOpen]);
+
+  const handleCloseSettings = useCallback(({ cameraId }) => {
+    setCameraId(cameraId);
+    setIsSettingsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!cameras?.length) return;
+    setCameraId(cameras[0].deviceId);
+  }, [cameras]);
+
+  return (
+    <Container isSettingsOpen={isSettingsOpen}>
+      <BinahMonitor
+        showMonitor={!(isMobile && isSettingsOpen)}
+        cameraId={cameraId}
+        onLicenseStatus={updateLicenseStatus}
+        onSettingsClick={toggleSettingsClick}
+        isSettingsOpen={isSettingsOpen}
+      />
+      <SettingsBars
+        open={isSettingsOpen}
+        onClose={handleCloseSettings}
+        cameras={cameras}
+        isLicenseValid={isLicenseValid}
+      />
+    </Container>
+  );
+};
+
+export default App;
+
+
+My webpack config is this:
+
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
+const paths = {
+  src: path.resolve(__dirname, 'src'),
+  build: path.resolve(__dirname, 'dist'),
+  html: path.resolve(__dirname, 'src/index.html'),
+  icon: path.resolve(__dirname, 'src/favicon.ico'),
+  node_modules: path.resolve(__dirname, 'node_modules'),
+};
+
+function common() {
+  return {
+    mode: 'development',
+    devtool: 'cheap-module-source-map',
+    devServer: {
+      hot: true,
+      port: 8000,
+      https: true,
+      host: '0.0.0.0',
+      useLocalIp: true,
+      headers: {
+        'Cross-Origin-Opener-Policy': 'same-origin',
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+      },
+    },
+    target: 'web',
+    entry: [paths.src],
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      modules: [paths.src, paths.node_modules],
+    },
+    experiments: { asyncWebAssembly: true },
+    module: {
+      rules: [
+        { test: /\.tsx?$/, loader: 'ts-loader' },
+        {
+          test: /\.svg$/,
+          use: [
+            {
+              loader: '@svgr/webpack',
+              options: {
+                svgo: false,
+                ref: true,
+              },
+            },
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'static/assets/[name].[ext]',
+                esModule: false,
+              },
+            },
+          ],
+          exclude: paths.node_modules,
+        },
+      ],
+    },
+    plugins: [
+      new HtmlWebpackPlugin({ template: paths.html, favicon: paths.icon }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(paths.node_modules, '@binah/web-sdk/dist'),
+            to: path.resolve(paths.build),
+            globOptions: {
+              ignore: ['**/main.*'],
+            },
+          },
+        ],
+      }),
+    ],
+  };
+}
+
+module.exports = () => common();
+
+
+package json is this
+
+{
+    "name": "@binah/sample-app",
+    "version": "4.12.1-8",
+    "scripts": {
+      "start": "cross-env NODE_ENV=development webpack serve",
+      "build": "cross-env NODE_ENV=production webpack --progress"
+    },
+    "dependencies": {
+      "@binah/web-sdk": "file:binah-web-sdk-v4.12.1-8.tgz",
+      "aws-amplify": "^5.3.6",
+      "react": "^17.0.1",
+      "react-dom": "^17.0.1",
+      "react-media-hook": "^0.4.9",
+      "styled-components": "^5.2.0",
+      "use-local-storage-state": "^9.0.2"
+    },
+    "devDependencies": {
+      "@svgr/webpack": "^5.5.0",
+      "@types/node": "^14.14.6",
+      "@types/react-dom": "^16.9.9",
+      "@types/styled-components": "^5.1.4",
+      "babel-plugin-styled-components": "^1.12.0",
+      "copy-webpack-plugin": "^7.0.0",
+      "cross-env": "^7.0.2",
+      "crypto-browserify": "^3.12.0",
+      "file-loader": "^6.2.0",
+      "html-webpack-plugin": "^4.5.0",
+      "path-browserify": "^1.0.1",
+      "rimraf": "^3.0.2",
+      "ts-loader": "^8.0.7",
+      "typescript": "^4.0.5",
+      "webpack": "^5.3.1",
+      "webpack-cli": "^4.1.0",
+      "webpack-dev-server": "^3.11.0",
+      "webpack-merge": "^5.2.0",
+      "worker-loader": "^3.0.5"
+    }
+  }
+
+  
+  The main react component is this:
+
+
+  import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import GlobalStyle from './style/global';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+ReactDOM.render(
+  <Wrapper>
+    <GlobalStyle />
+    <App />
+  </Wrapper>,
+  document.getElementById('root'),
+);
+
+
+The App component is this:
+
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import BinahMonitor from './BinahMonitor';
+import SettingsBars from './SettingsBars';
+import { Flex } from './shared/Flex';
+import { useCameras, useDisableZoom } from '../hooks';
+import UAParser from 'ua-parser-js';
+
+const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  background-color: ${({ isSettingsOpen }) =>
+    isSettingsOpen && 'rgba(0, 0, 0, 0.5)'};
+`;
+
+const App = () => {
+  const cameras = useCameras();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [cameraId, setCameraId] = useState<string>();
+  const [isLicenseValid, setIsLicenseValid] = useState(false);
+  const [isMobile] = useState(
+    UAParser(navigator.userAgent).device.type === 'mobile',
+  );
+  useDisableZoom();
+
+  const onSettingsClickedHandler = useCallback((event) => {
+    const settingsBars = document.getElementById('settingsBars');
+    const isSettingsButtonClicked = event.target.id === 'settingsButton';
+
+    const isInsideSettingsClicked =
+      settingsBars.contains(event.target as Node) || isSettingsButtonClicked;
+
+    if (!isInsideSettingsClicked) {
+      setIsSettingsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', onSettingsClickedHandler);
+    return () => {
+      document.removeEventListener('click', onSettingsClickedHandler);
+    };
+  }, []);
+
+  const updateLicenseStatus = useCallback((valid) => {
+    setIsLicenseValid(valid);
+  }, []);
+
+  const toggleSettingsClick = useCallback(() => {
+    setIsSettingsOpen(!isSettingsOpen);
+  }, [isSettingsOpen]);
+
+  const handleCloseSettings = useCallback(({ cameraId }) => {
+    setCameraId(cameraId);
+    setIsSettingsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!cameras?.length) return;
+    setCameraId(cameras[0].deviceId);
+  }, [cameras]);
+
+  return (
+    <Container isSettingsOpen={isSettingsOpen}>
+      <BinahMonitor
+        showMonitor={!(isMobile && isSettingsOpen)}
+        cameraId={cameraId}
+        onLicenseStatus={updateLicenseStatus}
+        onSettingsClick={toggleSettingsClick}
+        isSettingsOpen={isSettingsOpen}
+      />
+      <SettingsBars
+        open={isSettingsOpen}
+        onClose={handleCloseSettings}
+        cameras={cameras}
+        isLicenseValid={isLicenseValid}
+      />
+    </Container>
+  );
+};
+
+export default App;
+

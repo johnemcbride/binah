@@ -1,26 +1,43 @@
 {
   "compilerOptions": {
-    // "skipLibCheck": true,
-     "allowJs": true,
-    // "module": "commonjs",
-    "declaration": true,
-    // "removeComments": true,
-    // "emitDecoratorMetadata": true,
-    // "experimentalDecorators": true,
-    // "allowSyntheticDefaultImports": true,
+    // Recommended for modern browsers and ES modules:
+    "target": "ESNext",
+    "module": "ESNext",
+    // This ensures definitions for the latest DOM features, etc.
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    // If your entire codebase is TypeScript, set to false.
+    // If you have mixed .js and .ts, leave as true.
+    "allowJs": false,
+
+    // Enables lots of helpful type-checking & catches more errors.
+    "strict": true,
+
+    // Set to true if you're publishing a library and need .d.ts outputs.
+    // Otherwise false is fine to avoid clutter in builds.
+    "declaration": false,
+
+    // Ensures TS -> ES import/export compatibility
     "esModuleInterop": true,
-    // 
-    
     "moduleResolution": "node",
-    "target": "esnext",
-    // "lib": ["es5", "dom"],
-    // "sourceMap": true,
-    // "outDir": "./dist",
-    // "baseUrl": "./src",
-    // "incremental": true,
+
+    // Allows importing JSON files (like import data from './file.json')
     "resolveJsonModule": true,
-    // "types": ["react", "node"],
-    
-    "jsx": "react"
-  }, "include": ["src/**/*"],
+
+    // Requires each file to be an isolated module (often recommended with bundlers like Vite).
+    "isolatedModules": true,
+
+    // For React 17+ with the new JSX transform:
+    // - If you still rely on the older transform, keep "react".
+    // - If using the new transform, "react-jsx" is recommended.
+    "jsx": "react-jsx",
+
+    // Skips type checking in .d.ts files of your node_modules
+    // (often done to speed up builds; optional).
+    "skipLibCheck": true,
+
+    // Ensures correct casing in imports (recommended on case-sensitive file systems).
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"]
 }

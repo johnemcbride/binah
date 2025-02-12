@@ -1,0 +1,61 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import svgrPlugin from "vite-plugin-svgr";
+import fs from "fs";
+import path from "path";
+
+// Equivalent to Webpack's paths
+const paths = {
+  src: path.resolve(__dirname, "src"),
+  build: path.resolve(__dirname, "dist"),
+  node_modules: path.resolve(__dirname, "node_modules"),
+};
+
+export default defineConfig({
+  plugins: [
+    react(),
+    svgrPlugin({
+      svgrOptions: {
+        svgo: false,
+        ref: true,
+      },
+    }),
+  ],
+
+  server: {
+    host: "0.0.0.0", // Allow access from local IP
+    port: 8000,
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, "localhost-key.pem")),
+      cert: fs.readFileSync(path.resolve(__dirname, "localhost.pem")),
+    },
+    headers: {
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+    },
+  },
+
+  build: {
+    outDir: "dist", // Equivalent to Webpack's output
+    rollupOptions: {
+      input: "src/index.html", // Matches Webpack's HTML entry
+    },
+  },
+
+  resolve: {
+    alias: {
+      "@": paths.src, // Optional: Shortcut for imports like '@/components/...'
+    },
+    extensions: [".ts", ".tsx", ".js", ".jsx"], // Matches Webpack's resolve.extensions
+  },
+
+  optimizeDeps: {
+    include: ["react", "react-dom"], // Ensures these are pre-bundled
+  },
+
+  assetsInclude: ["**/*.wasm"], // Ensures WebAssembly is correctly handled
+
+  esbuild: {
+    target: "esnext", // Equivalent to Webpack's "target: web"
+  },
+});

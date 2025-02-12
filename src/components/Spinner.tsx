@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 // @ts-ignore
-import { ReactComponent as SpinnerBase } from '../assets/no-stats.svg';
+import  SpinnerBase  from '../assets/no-stats.svg';
 import { Flex } from './shared/Flex';
 import media from '../style/media';
 

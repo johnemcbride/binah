@@ -19,11 +19,6 @@ import monitor, {
 } from "@binah/web-sdk";
 import { InfoType, InfoData } from "../types";
 
-import { GraphQLQuery } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import { CreateSessionInput, CreateSessionMutation } from "../../API";
-import * as mutations from "../graphql/mutations";
-
 const useMonitor = (
   video: MutableRefObject<HTMLVideoElement>,
   cameraId: string,
@@ -45,7 +40,7 @@ const useMonitor = (
   const [warning, setWarning] = useState<AlertData>({ code: -1 });
   const [info, setInfo] = useState<InfoData>({ type: InfoType.NONE });
   const isDismissing = useRef<boolean>(false);
-  const [finalUrl,setFinalUrl] = useState<string>('')
+  const [finalUrl, setFinalUrl] = useState<string>("");
 
   const setInfoWithDismiss = useCallback(
     (info: InfoData, seconds?: number) => {
@@ -84,22 +79,15 @@ const useMonitor = (
       // post observations back to session
       //
       try {
-        const newSession = await API.graphql<
-          GraphQLQuery<CreateSessionMutation>
-        >({
-          query: mutations.createSession,
-          variables: {
-            input: { diagnosticsMarkers: JSON.stringify(vitalSignsResults) },
-          },
-          authMode: "AWS_IAM",
-        });
-
-        console.log(newSession);
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get("redirectUrl");
         const news = urlParams.get("news");
-        const bloodPressure = vitalSignsResults.results.bloodPressure?.value ?  vitalSignsResults.results.bloodPressure?.value : ''
-        const modifiedBpString = bloodPressure ? bloodPressure['systolic'] + ' over ' +  bloodPressure['diastolic'] : ''
+        const bloodPressure = vitalSignsResults.results.bloodPressure?.value
+          ? vitalSignsResults.results.bloodPressure?.value
+          : "";
+        const modifiedBpString = bloodPressure
+          ? bloodPressure["systolic"] + " over " + bloodPressure["diastolic"]
+          : "";
         if (redirectUrl != null) {
           const updatedUrl =
             redirectUrl +
@@ -109,7 +97,7 @@ const useMonitor = (
             (vitalSignsResults.results.wellnessIndex?.value || "") +
             "&wellnessLevel=" +
             (vitalSignsResults.results.wellnessLevel?.value || "") +
-            "&bloodPressure=" + 
+            "&bloodPressure=" +
             modifiedBpString +
             "&breathingRate=" +
             (vitalSignsResults.results.breathingRate?.value || "") +
@@ -145,12 +133,11 @@ const useMonitor = (
             (vitalSignsResults.results.stressIndex?.value || "") +
             "&stressLevel=" +
             (vitalSignsResults.results.stressLevel?.value || "");
-            if(news && news == 'true') {
-              setFinalUrl(updatedUrl)
-            }
-            else{
-              window.location.href = updatedUrl
-            }
+          if (news && news == "true") {
+            setFinalUrl(updatedUrl);
+          } else {
+            window.location.href = updatedUrl;
+          }
         }
       } catch (err) {
         console.log("failyure");
@@ -326,7 +313,7 @@ const useMonitor = (
     error,
     warning,
     info,
-    finalUrl
+    finalUrl,
   };
 };
 

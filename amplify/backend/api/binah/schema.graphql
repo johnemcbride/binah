@@ -1,7 +1,0 @@
-type Session
-  @model
-  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
-  id: ID!
-  patientBio: AWSJSON
-  diagnosticsMarkers: AWSJSON
-}
