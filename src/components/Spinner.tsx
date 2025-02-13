@@ -28,7 +28,7 @@ const Wrapper = styled(Flex)`
 
 const Spinner = () => (
   <Wrapper>
-    <SpinnerBase />
+    <img src={SpinnerBase} alt="...loading" />
   </Wrapper>
 );
 
