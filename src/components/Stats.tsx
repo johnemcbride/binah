@@ -74,22 +74,8 @@ const Stats = ({ vitalSigns }: IStats) => {
               : 'N/A'
           }
         />
-        <StatsBox
-          title={'SL'}
-          value={
-            vitalSigns.stress.isEnabled
-              ? vitalSigns.stress.value || '--'
-              : 'N/A'
-          }
-        />
-        <StatsBox
-          title={'SDNN'}
-          value={
-            vitalSigns.hrvSdnn.isEnabled
-              ? vitalSigns.hrvSdnn.value || '--'
-              : 'N/A'
-          }
-        />
+       
+      
         {/*<StatsBox*/}
         {/*  title={'SpO2'}*/}
         {/*  value={*/}
