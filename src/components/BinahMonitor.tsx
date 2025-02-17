@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, {
   useCallback,
   useEffect,
@@ -139,13 +140,7 @@ const InfoBarWrapper = styled.div`
     flex: 0.45;
   `}
 `;
-const NextButton = styled.button`
-  background: #1d70b8;
-  padding: 10px 20px;
-  border: none;
-  color: white;
-  border-radius: 4px;
-`;
+
 
 const BinahMonitor = ({
   showMonitor,
@@ -155,6 +150,8 @@ const BinahMonitor = ({
   isSettingsOpen,
   setVitalSigns
 }) => {
+
+  const navigate = useNavigate();
   if (!showMonitor) {
     return null;
   }
@@ -193,8 +190,8 @@ const BinahMonitor = ({
   const warningMessage = useWarning(warning);
 
   const urlParams = new URLSearchParams(window.location.search);
-  const news = urlParams.get("news");
-
+  //const news = urlParams.get("news");
+  const news = true
   const isMeasuring = useCallback(
     () => sessionState === SessionState.MEASURING,
     [sessionState],
@@ -251,9 +248,15 @@ const BinahMonitor = ({
   }, [error]);
 
   useEffect(() => {
-    
-    if (typeof setVitalSigns === 'function'){
-      setVitalSigns(vitalSigns)
+    if (typeof setVitalSigns === 'function') {
+      // Only call setVitalSigns if there's an actual change in the data
+      setVitalSigns((prev) => {
+        // Compare old vs. new. If the same, do nothing
+        if (JSON.stringify(prev) === JSON.stringify(vitalSigns)) {
+          return prev; // No update
+        }
+        return vitalSigns; // Trigger parent update only if different
+      });
     }
    
   }, [vitalSigns, setVitalSigns]);
@@ -277,10 +280,11 @@ const BinahMonitor = ({
             />
           </InfoBarWrapper>
           {showResults ? (
-            <div>
-             <Matrix vitalSigns={vitalSigns}/>
-              <NextButton onClick={()=>  window.location.href = finalUrl}>Next</NextButton>
-            </div>
+            console.log('Trying to navigate to matrix'),
+            navigate('/matrix')
+            // <div>
+            //  <Matrix vitalSigns={vitalSigns}/>
+            //       </div>
           ) :
           <>
           <VideoAndStatsWrapper isMobile={mobile}>

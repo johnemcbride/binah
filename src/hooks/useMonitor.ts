@@ -73,78 +73,24 @@ const useMonitor = (
 
   const onFinalResults = useCallback(
     async (vitalSignsResults: VitalSignsResults) => {
+      console.log("Final results received");
       updateVitalSigns(vitalSignsResults.results);
-      console.log(JSON.stringify(vitalSignsResults));
+      //console.log(JSON.stringify(vitalSignsResults));
       // {"results":{"heartRate":{"value":57,"confidenceLevel":3},"wellnessLevel":{"value":3},"wellnessIndex":{"value":10}}}
 
       //
       // post observations back to session
       //
       try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirectUrl = urlParams.get("redirectUrl");
-        const news = urlParams.get("news");
         const bloodPressure = vitalSignsResults.results.bloodPressure?.value
           ? vitalSignsResults.results.bloodPressure?.value
           : "";
         const modifiedBpString = bloodPressure
           ? bloodPressure["systolic"] + " over " + bloodPressure["diastolic"]
           : "";
-        if (redirectUrl != null) {
-          const updatedUrl =
-            redirectUrl +
-            "?heartRate=" +
-            +(vitalSignsResults.results.heartRate?.value || "") +
-            "&wellnessIndex=" +
-            (vitalSignsResults.results.wellnessIndex?.value || "") +
-            "&wellnessLevel=" +
-            (vitalSignsResults.results.wellnessLevel?.value || "") +
-            "&bloodPressure=" +
-            modifiedBpString +
-            "&breathingRate=" +
-            (vitalSignsResults.results.breathingRate?.value || "") +
-            "&hemoglobin=" +
-            (vitalSignsResults.results.hemoglobin?.value || "") +
-            "&hemoglobinA1c=" +
-            (vitalSignsResults.results.hemoglobinA1c?.value || "") +
-            "&lfhf=" +
-            (vitalSignsResults.results.lfhf?.value || "") +
-            "&meanRri=" +
-            (vitalSignsResults.results.meanRri?.value || "") +
-            "&pnsZone=" +
-            (vitalSignsResults.results.pnsZone?.value || "") +
-            "&prq=" +
-            (vitalSignsResults.results.prq?.value || "") +
-            "&rmssd=" +
-            (vitalSignsResults.results.rmssd?.value || "") +
-            "&sd1=" +
-            (vitalSignsResults.results.sd1?.value || "") +
-            "&sd2=" +
-            (vitalSignsResults.results.sd2?.value || "") +
-            "&sdnn=" +
-            (vitalSignsResults.results.sdnn?.value || "") +
-            "&snsIndex=" +
-            (vitalSignsResults.results.snsIndex?.value || "") +
-            "&snsZone=" +
-            (vitalSignsResults.results.snsZone?.value || "") +
-            "&stressIndex=" +
-            (vitalSignsResults.results.stressIndex?.value || "") +
-            "&snsZone=" +
-            (vitalSignsResults.results.snsZone?.value || "") +
-            "&stressIndex=" +
-            (vitalSignsResults.results.stressIndex?.value || "") +
-            "&stressLevel=" +
-            (vitalSignsResults.results.stressLevel?.value || "");
-          if (news && news == "true") {
-            setFinalUrl(updatedUrl);
-
-            console.log("In line 139, updatign finalurl");
-          } else {
-            //window.location.href = updatedUrl;
-            console.log("In line 142, navigating");
-            navigate(updatedUrl);
-          }
-        }
+        //window.location.href = updatedUrl;
+        console.log("In line 142, navigating");
+        navigate("/matrix");
       } catch (err) {
         console.log("failyure");
         console.log(err);

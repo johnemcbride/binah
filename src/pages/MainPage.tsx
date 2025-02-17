@@ -18,7 +18,6 @@ const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
 `;
 
 const MainPage = ({setVitalSigns}) => {
-  console.log('MainPage');
   const cameras = useCameras();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [cameraId, setCameraId] = useState<string>();

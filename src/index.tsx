@@ -18,8 +18,7 @@ function AppRoot() {
   const [vitalSigns, setVitalSigns] = useState<object>({});
 
   const setVitalSignsHandler = (newVitalSigns: object) => {
-    console.log('setting vital signs in top-level');
-    console.log(newVitalSigns);
+    //console.log('newVitalSigns', newVitalSigns);
     setVitalSigns(newVitalSigns);
   };
 

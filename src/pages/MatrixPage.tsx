@@ -1,6 +1,8 @@
 import React from "react"
 import styled from 'styled-components';
 import media from '../style/media';
+import { useNavigate } from "react-router-dom";
+import { Button } from "nhsuk-react-components";
 
 enum COLOR {
     RED='#EB9178',
@@ -8,6 +10,13 @@ enum COLOR {
     YELLOW='#FFF2A8',
     BLUE='#1d70b8'
 }
+const NextButton = styled.button`
+  background: #1d70b8;
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+`;
 
 const MatrixContainer = styled.div`
     border: 1px solid #ccc;
@@ -170,6 +179,8 @@ const calculateNewsScore = (
 
 const MatrixPage = ({vitalSigns}) => {
 
+    const navigate = useNavigate()
+
     const breathingRate = vitalSigns?.breathingRate?.value || null
     const heartRate = vitalSigns?.heartRate?.value || null
     const systolic = vitalSigns?.bloodPressure?.value?.systolic || null
@@ -285,7 +296,9 @@ const MatrixPage = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
             </MatrixRow>
         </MatrixContainer>
-        <FinalScore>Your overall NEWS2 score is {finalScore}</FinalScore>
+        <Button onClick={()=> navigate('/results')}>Next</Button>
+        <NextButton onClick={()=> navigate('/results')}>Next</NextButton>
+       
         </>
     )
 }
