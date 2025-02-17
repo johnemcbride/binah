@@ -35,6 +35,11 @@ export default defineConfig({
           src: "node_modules/@binah/web-sdk/dist/*",
           dest: "public",
         },
+        {
+          // Adjust the source path to match your actual needs:
+          src: "node_modules/nhsuk-frontend/dist/*",
+          dest: "public",
+        },
       ],
       hook: "buildStart",
     }),
