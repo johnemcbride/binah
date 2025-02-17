@@ -168,7 +168,7 @@ const calculateNewsScore = (
   }
   
 
-const Matrix = ({vitalSigns}) => {
+const MatrixPage = ({vitalSigns}) => {
 
     const breathingRate = vitalSigns?.breathingRate?.value || null
     const heartRate = vitalSigns?.heartRate?.value || null
@@ -290,4 +290,4 @@ const Matrix = ({vitalSigns}) => {
     )
 }
 
-export default Matrix
+export default MatrixPage

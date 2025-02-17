@@ -35,7 +35,8 @@ import Loader from './Loader';
 import { VideoReadyState } from '../types';
 import TopBar from './TopBar';
 import Mask from '../assets/mask.svg';
-import Matrix from './Matrix';
+import Matrix from '../pages/MatrixPage';
+
 
 const MonitorWrapper = styled(Flex)<{ isSettingsOpen: boolean }>`
   flex-direction: column;
@@ -152,10 +153,12 @@ const BinahMonitor = ({
   onLicenseStatus,
   onSettingsClick,
   isSettingsOpen,
+  setVitalSigns
 }) => {
   if (!showMonitor) {
     return null;
   }
+
 
   const video = useRef<HTMLVideoElement>(null);
   const [isMeasurementEnabled, setIsMeasurementEnabled] = useState<boolean>(
@@ -246,6 +249,15 @@ const BinahMonitor = ({
   useEffect(() => {
     onLicenseStatus(!(error?.code in HealthMonitorCodes));
   }, [error]);
+
+  useEffect(() => {
+    
+    if (typeof setVitalSigns === 'function'){
+      setVitalSigns(vitalSigns)
+    }
+   
+  }, [vitalSigns, setVitalSigns]);
+
 
   const mobile = useMemo(() => isMobile(), []);
   const desktop = useMemo(() => !isTablet() && !isMobile(), []);

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   MutableRefObject,
   useCallback,
@@ -42,6 +43,7 @@ const useMonitor = (
   const isDismissing = useRef<boolean>(false);
   const [finalUrl, setFinalUrl] = useState<string>("");
 
+  const navigate = useNavigate();
   const setInfoWithDismiss = useCallback(
     (info: InfoData, seconds?: number) => {
       if (!isDismissing.current) {
@@ -135,8 +137,12 @@ const useMonitor = (
             (vitalSignsResults.results.stressLevel?.value || "");
           if (news && news == "true") {
             setFinalUrl(updatedUrl);
+
+            console.log("In line 139, updatign finalurl");
           } else {
-            window.location.href = updatedUrl;
+            //window.location.href = updatedUrl;
+            console.log("In line 142, navigating");
+            navigate(updatedUrl);
           }
         }
       } catch (err) {

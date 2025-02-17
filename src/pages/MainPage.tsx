@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import BinahMonitor from './BinahMonitor';
-import SettingsBars from './SettingsBars';
-import { Flex } from './shared/Flex';
+import BinahMonitor from '../components/BinahMonitor';
+import SettingsBars from '../components/SettingsBars';
+import { Flex } from '../components/shared/Flex';
 import { useCameras, useDisableZoom } from '../hooks';
 import UAParser from 'ua-parser-js';
 
@@ -17,7 +17,8 @@ const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
     isSettingsOpen && 'rgba(0, 0, 0, 0.5)'};
 `;
 
-const App = () => {
+const MainPage = ({setVitalSigns}) => {
+  console.log('MainPage');
   const cameras = useCameras();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [cameraId, setCameraId] = useState<string>();
@@ -72,6 +73,7 @@ const App = () => {
         onLicenseStatus={updateLicenseStatus}
         onSettingsClick={toggleSettingsClick}
         isSettingsOpen={isSettingsOpen}
+        setVitalSigns={setVitalSigns}
       />
       <SettingsBars
         open={isSettingsOpen}
@@ -83,4 +85,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default MainPage;

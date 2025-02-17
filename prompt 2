@@ -1,0 +1,205 @@
+I have a react app using vite with the details of code and structure below.
+
+Advise how i wrap the main app component in a three page flow:
+
+1) welcome page, then when you click start brings you onto main page with the app
+2) the main page
+3) capture outputs from the main App and display results in next page
+
+please use the nhs react front end library and come up with content welcoming people to the app, which is using AI to tell vital signs through a camera.
+explain this is a mockup showing how the app would work in real life
+explain the ebenfits for public health and how it can be used in the future
+
+the overall directory structure is this
+
+.
+├── README.md
+├── binah-web-sdk-v4.12.1-8.tgz
+├── index.html
+├── localhost-key.pem
+├── localhost.pem
+├── package-lock.json
+├── package.json
+├── prompt
+├── prompt 2
+├── src
+│   ├── assets
+│   │   ├── cancel.svg
+│   │   ├── error-icon.svg
+│   │   ├── heart-big.svg
+│   │   ├── heart-disabled.svg
+│   │   ├── logo.svg
+│   │   ├── mask.svg
+│   │   ├── no-stats-black.svg
+│   │   ├── no-stats.svg
+│   │   ├── play-big.svg
+│   │   ├── settings-hamburger.svg
+│   │   ├── settings.svg
+│   │   ├── stop.svg
+│   │   └── visibility.svg
+│   ├── components
+│   │   ├── App.tsx
+│   │   ├── BinahMonitor.tsx
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── InfoBar.tsx
+│   │   ├── Loader.tsx
+│   │   ├── Logo.tsx
+│   │   ├── Matrix.tsx
+│   │   ├── OverlayCanvas.tsx
+│   │   ├── PasswordInput.tsx
+│   │   ├── SettingsBars.tsx
+│   │   ├── SettingsButton.tsx
+│   │   ├── SettingsDropDown.tsx
+│   │   ├── SettingsItem.tsx
+│   │   ├── Spinner.tsx
+│   │   ├── StartButton.tsx
+│   │   ├── Stats.tsx
+│   │   ├── StatsBox.tsx
+│   │   ├── Timer.tsx
+│   │   ├── TopBar.tsx
+│   │   ├── alert
+│   │   │   ├── ErrorAlert.tsx
+│   │   │   ├── InfoAlert.tsx
+│   │   │   ├── WarningAlert.tsx
+│   │   │   └── index.ts
+│   │   └── shared
+│   │       ├── CloseButton.tsx
+│   │       ├── Flex.tsx
+│   │       └── FlexSpace.tsx
+│   ├── custom.d.ts
+│   ├── favicon.ico
+│   ├── hooks
+│   │   ├── index.ts
+│   │   ├── useCameras.ts
+│   │   ├── useDisableZoom.ts
+│   │   ├── useError.ts
+│   │   ├── useLicenseDetails.ts
+│   │   ├── useMonitor.ts
+│   │   ├── usePageVisibility.ts
+│   │   ├── usePrevious.ts
+│   │   ├── useTimer.ts
+│   │   └── useWarning.ts
+│   ├── index.tsx
+│   ├── style
+│   │   ├── global.ts
+│   │   ├── media.ts
+│   │   └── mirror.tsx
+│   └── types.ts
+├── tsconfig.json
+├── vite.config.ts
+└── vite.config.ts.old
+
+
+
+The main react component is this:
+
+
+  import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+import GlobalStyle from './style/global';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+ReactDOM.render(
+  <Wrapper>
+    <GlobalStyle />
+    <App />
+  </Wrapper>,
+  document.getElementById('root'),
+);
+
+
+The App component is this:
+
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import BinahMonitor from './BinahMonitor';
+import SettingsBars from './SettingsBars';
+import { Flex } from './shared/Flex';
+import { useCameras, useDisableZoom } from '../hooks';
+import UAParser from 'ua-parser-js';
+
+const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  background-color: ${({ isSettingsOpen }) =>
+    isSettingsOpen && 'rgba(0, 0, 0, 0.5)'};
+`;
+
+const App = () => {
+  const cameras = useCameras();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [cameraId, setCameraId] = useState<string>();
+  const [isLicenseValid, setIsLicenseValid] = useState(false);
+  const [isMobile] = useState(
+    UAParser(navigator.userAgent).device.type === 'mobile',
+  );
+  useDisableZoom();
+
+  const onSettingsClickedHandler = useCallback((event) => {
+    const settingsBars = document.getElementById('settingsBars');
+    const isSettingsButtonClicked = event.target.id === 'settingsButton';
+
+    const isInsideSettingsClicked =
+      settingsBars.contains(event.target as Node) || isSettingsButtonClicked;
+
+    if (!isInsideSettingsClicked) {
+      setIsSettingsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', onSettingsClickedHandler);
+    return () => {
+      document.removeEventListener('click', onSettingsClickedHandler);
+    };
+  }, []);
+
+  const updateLicenseStatus = useCallback((valid) => {
+    setIsLicenseValid(valid);
+  }, []);
+
+  const toggleSettingsClick = useCallback(() => {
+    setIsSettingsOpen(!isSettingsOpen);
+  }, [isSettingsOpen]);
+
+  const handleCloseSettings = useCallback(({ cameraId }) => {
+    setCameraId(cameraId);
+    setIsSettingsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!cameras?.length) return;
+    setCameraId(cameras[0].deviceId);
+  }, [cameras]);
+
+  return (
+    <Container isSettingsOpen={isSettingsOpen}>
+      <BinahMonitor
+        showMonitor={!(isMobile && isSettingsOpen)}
+        cameraId={cameraId}
+        onLicenseStatus={updateLicenseStatus}
+        onSettingsClick={toggleSettingsClick}
+        isSettingsOpen={isSettingsOpen}
+      />
+      <SettingsBars
+        open={isSettingsOpen}
+        onClose={handleCloseSettings}
+        cameras={cameras}
+        isLicenseValid={isLicenseValid}
+      />
+    </Container>
+  );
+};
+
+export default App;
+
