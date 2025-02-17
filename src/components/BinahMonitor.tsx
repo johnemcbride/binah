@@ -184,14 +184,16 @@ const BinahMonitor = ({
     licenseKey,
     null,
     startMeasuring,
+    setVitalSigns
   );
+ 
   const prevSessionState = usePrevious(sessionState);
   const errorMessage = useError(error);
   const warningMessage = useWarning(warning);
 
   const urlParams = new URLSearchParams(window.location.search);
   //const news = urlParams.get("news");
-  const news = true
+  const news = "true"
   const isMeasuring = useCallback(
     () => sessionState === SessionState.MEASURING,
     [sessionState],
@@ -239,6 +241,7 @@ const BinahMonitor = ({
       setIsLoading(false);
     }
     if(sessionState === SessionState.STOPPING && news=='true'){
+      console.log('Show results true')
       setShowResults(true)
     }
   }, [errorMessage, sessionState, isPageVisible]);
@@ -247,19 +250,7 @@ const BinahMonitor = ({
     onLicenseStatus(!(error?.code in HealthMonitorCodes));
   }, [error]);
 
-  useEffect(() => {
-    if (typeof setVitalSigns === 'function') {
-      // Only call setVitalSigns if there's an actual change in the data
-      setVitalSigns((prev) => {
-        // Compare old vs. new. If the same, do nothing
-        if (JSON.stringify(prev) === JSON.stringify(vitalSigns)) {
-          return prev; // No update
-        }
-        return vitalSigns; // Trigger parent update only if different
-      });
-    }
-   
-  }, [vitalSigns, setVitalSigns]);
+ 
 
 
   const mobile = useMemo(() => isMobile(), []);
@@ -281,6 +272,7 @@ const BinahMonitor = ({
           </InfoBarWrapper>
           {showResults ? (
             console.log('Trying to navigate to matrix'),
+            setVitalSigns(vitalSigns),
             navigate('/matrix')
             // <div>
             //  <Matrix vitalSigns={vitalSigns}/>

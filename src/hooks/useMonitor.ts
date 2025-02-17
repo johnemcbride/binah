@@ -26,7 +26,8 @@ const useMonitor = (
   processingTime: number,
   licenseKey: string,
   productId: string,
-  startMeasuring: boolean
+  startMeasuring: boolean,
+  updateMasterVitalSigns: (vitalSigns: VitalSigns) => void
 ) => {
   const [session, setSession] = useState<HealthMonitorSession>();
   const [sessionState, setSessionState] = useState<SessionState>();
@@ -75,26 +76,28 @@ const useMonitor = (
     async (vitalSignsResults: VitalSignsResults) => {
       console.log("Final results received");
       updateVitalSigns(vitalSignsResults.results);
+      updateMasterVitalSigns(vitalSignsResults.results);
+      navigate("/matrix");
       //console.log(JSON.stringify(vitalSignsResults));
       // {"results":{"heartRate":{"value":57,"confidenceLevel":3},"wellnessLevel":{"value":3},"wellnessIndex":{"value":10}}}
 
       //
       // post observations back to session
       //
-      try {
-        const bloodPressure = vitalSignsResults.results.bloodPressure?.value
-          ? vitalSignsResults.results.bloodPressure?.value
-          : "";
-        const modifiedBpString = bloodPressure
-          ? bloodPressure["systolic"] + " over " + bloodPressure["diastolic"]
-          : "";
-        //window.location.href = updatedUrl;
-        console.log("In line 142, navigating");
-        navigate("/matrix");
-      } catch (err) {
-        console.log("failyure");
-        console.log(err);
-      }
+      // try {
+      //   const bloodPressure = vitalSignsResults.results.bloodPressure?.value
+      //     ? vitalSignsResults.results.bloodPressure?.value
+      //     : "";
+      //   const modifiedBpString = bloodPressure
+      //     ? bloodPressure["systolic"] + " over " + bloodPressure["diastolic"]
+      //     : "";
+      //   //window.location.href = updatedUrl;
+      //   console.log("In line 142, navigating");
+      //   navigate("/matrix");
+      // } catch (err) {
+      //   console.log("failyure");
+      //   console.log(err);
+      // }
     },
     []
   );
