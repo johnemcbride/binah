@@ -5,8 +5,11 @@ import SettingsBars from '../components/SettingsBars';
 import { Flex } from '../components/shared/Flex';
 import { useCameras, useDisableZoom } from '../hooks';
 import UAParser from 'ua-parser-js';
+import { Button, Container, Hero, Header, Row, Col, Card } from 'nhsuk-react-components';
 
-const Container = styled(Flex)<{ isSettingsOpen: boolean }>`
+
+
+const BinahContainer = styled(Flex)<{ isSettingsOpen: boolean }>`
   height: 100%;
   width: 100%;
   position: relative;
@@ -65,7 +68,25 @@ const MainPage = ({setVitalSigns}) => {
   }, [cameras]);
 
   return (
-    <Container isSettingsOpen={isSettingsOpen}>
+
+    <>
+    <Header>
+        <Header.Container>
+          <Header.Logo href="/" />
+          
+        </Header.Container>
+        <Header.Nav>
+
+              <Header.NavItem
+                home
+                href="/"
+              >
+                Home
+              </Header.NavItem>
+              {/* <Header.NavDropdownMenu /> */}
+            </Header.Nav>
+        </Header>
+    <BinahContainer isSettingsOpen={isSettingsOpen}>
       <BinahMonitor
         showMonitor={!(isMobile && isSettingsOpen)}
         cameraId={cameraId}
@@ -74,13 +95,14 @@ const MainPage = ({setVitalSigns}) => {
         isSettingsOpen={isSettingsOpen}
         setVitalSigns={setVitalSigns}
       />
-      <SettingsBars
+      {/* <SettingsBars
         open={isSettingsOpen}
         onClose={handleCloseSettings}
         cameras={cameras}
         isLicenseValid={isLicenseValid}
-      />
-    </Container>
+      /> */}
+    </BinahContainer>
+    </>
   );
 };
 

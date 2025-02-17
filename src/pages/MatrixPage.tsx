@@ -1,6 +1,8 @@
 import React from "react"
 import styled from 'styled-components';
 import media from '../style/media';
+import { Button, Container, Hero, Header, Row, Col, Card } from 'nhsuk-react-components';
+
 import { useNavigate } from "react-router-dom";
 enum COLOR {
     RED='#EB9178',
@@ -288,7 +290,7 @@ const MatrixPage = ({vitalSigns}) => {
             </MatrixRow>
         </MatrixContainer>
         <FinalScore>Your overall NEWS2 score is {finalScore}</FinalScore>
-        <NextButton onClick={()=> navigate('/results')}>Next</NextButton>
+        <Button onClick={()=> navigate('/results')}>Next</Button>
        
         </>
     )

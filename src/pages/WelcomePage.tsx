@@ -1,6 +1,6 @@
 // src/pages/WelcomePage.tsx
 import React from 'react';
-import { Button, Container, Hero, Header } from 'nhsuk-react-components';
+import { Button, Container, Hero, Header, Row, Col, Card } from 'nhsuk-react-components';
 import { Link } from 'react-router-dom';
 
 const WelcomePage = () => {
@@ -34,18 +34,34 @@ const WelcomePage = () => {
           </Hero.Text>
         </Hero>
 
-          <h1>About This Demo</h1>
- 
-        <p>
-          We are demonstrating how artificial intelligence might measure your
-          heart rate and other vital signs through a standard camera. Please note,
-          <strong> this is not a medical device</strong>, but rather a concept
-          design showing future possibilities for healthcare.
-        </p>
+        <Container>
+  <Row>
+    <Col width="full">
+    <Card>
+      <Card.Content>
+          <Card.Heading>About This Demo</Card.Heading>
+          <Card.Description>We are demonstrating how artificial intelligence might measure your
+            heart rate and other vital signs through a standard camera. Please note,
+            <strong> this is not a medical device</strong>, but rather a concept
+            design showing future possibilities for healthcare.</Card.Description>
+        </Card.Content>
+      </Card>
+
 
         <Button as="a" href="/main">
           Start the Demo
         </Button>
+    </Col>
+
+ 
+  </Row>
+</Container>
+
+
+
+          
+ 
+      
     </>
   );
 };
