@@ -30,24 +30,24 @@ const MainPage = ({setVitalSigns}) => {
   );
   useDisableZoom();
 
-  const onSettingsClickedHandler = useCallback((event) => {
-    const settingsBars = document.getElementById('settingsBars');
-    const isSettingsButtonClicked = event.target.id === 'settingsButton';
+  // const onSettingsClickedHandler = useCallback((event) => {
+  //   const settingsBars = document.getElementById('settingsBars');
+  //   const isSettingsButtonClicked = event.target.id === 'settingsButton';
 
-    const isInsideSettingsClicked =
-      settingsBars.contains(event.target as Node) || isSettingsButtonClicked;
+  //   const isInsideSettingsClicked =
+  //     settingsBars.contains(event.target as Node) || isSettingsButtonClicked;
 
-    if (!isInsideSettingsClicked) {
-      setIsSettingsOpen(false);
-    }
-  }, []);
+  //   if (!isInsideSettingsClicked) {
+  //     setIsSettingsOpen(false);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    document.addEventListener('click', onSettingsClickedHandler);
-    return () => {
-      document.removeEventListener('click', onSettingsClickedHandler);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('click', onSettingsClickedHandler);
+  //   return () => {
+  //     document.removeEventListener('click', onSettingsClickedHandler);
+  //   };
+  // }, []);
 
   const updateLicenseStatus = useCallback((valid) => {
     setIsLicenseValid(valid);

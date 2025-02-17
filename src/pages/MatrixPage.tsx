@@ -150,6 +150,15 @@ const calculateNewsScore = (
     return 3;
   }
 
+  const getHemoglobinMatrixPoint = (HEMOGLOBIN) => {  
+  if (!HEMOGLOBIN) return null;
+  if(HEMOGLOBIN <= 5.7) return 0;
+  if(HEMOGLOBIN >= 5.8 && HEMOGLOBIN <= 6.1) return 1;
+  if(HEMOGLOBIN >= 6.2 && HEMOGLOBIN <= 6.4) return 2;
+  if(HEMOGLOBIN > 6.5 ) return 3;
+  }
+
+
   const getHeartRateMatrixPoint = (PULSE) => {
     if (!PULSE) return null;
     if (PULSE <= 40) return -3;
@@ -172,6 +181,7 @@ const calculateNewsScore = (
 
 const MatrixPage = ({vitalSigns}) => {
 
+    console.log('vitalSigns', vitalSigns)
     const navigate = useNavigate()
 
     const breathingRate = vitalSigns?.breathingRate?.value || null
@@ -184,9 +194,48 @@ const MatrixPage = ({vitalSigns}) => {
     const hRMP = getHeartRateMatrixPoint(heartRate)
     const bRMP = getBreathRateMatrixPoint(breathingRate)
     const bpMP = getBloodPressureMatrixPoint(systolic)
+    const hMP = getHemoglobinMatrixPoint(vitalSigns?.hemoglobinA1c?.value)
 
     return (
         <>
+
+          <Header>
+            <Header.Container>
+              <Header.Logo href="/" />
+              
+            </Header.Container>
+            <Header.Nav>
+            
+              <Header.NavItem
+                home
+                href="/"
+              >
+                Home
+              </Header.NavItem>
+              {/* <Header.NavDropdownMenu /> */}
+            </Header.Nav>
+          </Header>
+
+             <Container>
+            <Row>
+              <Col width="full">
+              <Card>
+                <Card.Content>
+                    <Card.Heading>View Your Results</Card.Heading>
+                    <Card.Description>Depending on the quality of your camera this app should have picked up your breathing rate, pulse, blood pressure and even blood sugar (Heomoglobin A1C). 
+                      
+                      The chart below shows where your reading fell within normal ranges.  </Card.Description>
+                  </Card.Content>
+                </Card>
+          
+          
+              </Col>
+          
+           
+            </Row>
+            <Row>
+              <Col width="full">
+            
         <MatrixContainer>
         <MatrixRow>
                 <MatrixCol border="none" align="left" basis='21%' color={COLOR.BLUE}> <Span>  </Span></MatrixCol>
@@ -208,6 +257,8 @@ const MatrixPage = ({vitalSigns}) => {
                 <MatrixCol  color={COLOR.BLUE}> <Span> 2 </Span></MatrixCol>
                 <MatrixCol  color={COLOR.BLUE}> <Span> 3 </Span></MatrixCol>
             </MatrixRow>
+
+            {bRMP != null?
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Respiration rate <br/> (per minute) </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> {bRMP===-3 && <Overlay />} <Span> &le;8 </Span></MatrixCol>
@@ -217,37 +268,9 @@ const MatrixPage = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.YELLOW}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}>{bRMP===2 && <Overlay />} <Span> 21-24 </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}>{bRMP===3 && <Overlay />} <Span> &ge;25 </Span></MatrixCol>
-            </MatrixRow>
-            <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub> Scale 1 (%) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> &le;91 </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> 92-93 </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> 94-95 </Span></MatrixCol>
-                <MatrixCol> <Span> &ge;96 </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
-            </MatrixRow>
-            <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> SpO<sub>2</sub> Scale 2 (%) </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> &le;83 </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> 84-85 </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> 86-87 </Span></MatrixCol>
-                <MatrixCol> <Span> 88-92<br/>&ge;93 on air </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> 93-94 on<br/>oxygen </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> 95-96 on<br/>oxygen </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> &ge;97 on<br/>oxygen </Span></MatrixCol>
-            </MatrixRow>
-            <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Air or oxygen? </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> oxygen </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol> <Span> Air  </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> {' '}</Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
-            </MatrixRow>
+            </MatrixRow>: null}
+         
+            {bpMP != null?
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Systolic blood pressure (mmHg) </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> {bpMP===-3 && <Overlay />}<Span> &le;90 </Span></MatrixCol>
@@ -257,7 +280,9 @@ const MatrixPage = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.YELLOW}><Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> {bpMP===3 && <Overlay />}<Span> &ge;220 </Span></MatrixCol>
-            </MatrixRow>
+            </MatrixRow> :null}
+
+            {hRMP != null?
             <MatrixRow>
                 <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Pulse (per minute) </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}> {hRMP===-3 && <Overlay />} <Span> &le;40 </Span></MatrixCol>
@@ -267,30 +292,40 @@ const MatrixPage = ({vitalSigns}) => {
                 <MatrixCol color={COLOR.YELLOW}>{hRMP===1 && <Overlay />} <Span> 91-110 </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}>{hRMP===2 && <Overlay />} <Span> 111-130 </Span></MatrixCol>
                 <MatrixCol color={COLOR.RED}>{hRMP===3 && <Overlay />} <Span> &ge;131 </Span></MatrixCol>
-            </MatrixRow>
+            </MatrixRow>:null}
+          {hMP != null?
             <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Consciousness </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
+                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Hemoglobin A1C </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}> {hMP===-3 && <Overlay />} <Span> {' '} </Span></MatrixCol>
                 <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol> <Span> Alert </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> {' '}</Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> CVPU </Span></MatrixCol>
-            </MatrixRow>
-            <MatrixRow>
-                <MatrixCol align="left" basis='21%'  color={COLOR.BLUE}> <Span> Temperature {'('}&deg;{'C)'} </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> &le;35.0 </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> {' '} </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> 35.1-36.0 </Span></MatrixCol>
-                <MatrixCol> <Span> 36.1-38.0 </Span></MatrixCol>
-                <MatrixCol color={COLOR.YELLOW}> <Span> 38.1-39.0 </Span></MatrixCol>
-                <MatrixCol color={COLOR.ORANGE}> <Span> &ge;39.1 </Span></MatrixCol>
-                <MatrixCol color={COLOR.RED}> <Span> {' '} </Span></MatrixCol>
-            </MatrixRow>
+                <MatrixCol color={COLOR.YELLOW}>{hMP===-1 && <Overlay />} <Span> {' '} </Span></MatrixCol>
+                <MatrixCol>{hMP===0 && <Overlay />} <Span> &le;5.7 </Span></MatrixCol>
+                <MatrixCol color={COLOR.YELLOW}>{hMP===1 && <Overlay />} <Span> 5.8-6.1 </Span></MatrixCol>
+                <MatrixCol color={COLOR.ORANGE}>{hMP===2 && <Overlay />} <Span> 6.2-6.4 </Span></MatrixCol>
+                <MatrixCol color={COLOR.RED}>{hMP===3 && <Overlay />} <Span>6.4+ </Span></MatrixCol>
+            </MatrixRow>: null}
+       
+       
         </MatrixContainer>
-        <FinalScore>Your overall NEWS2 score is {finalScore}</FinalScore>
-        <Button onClick={()=> navigate('/results')}>Next</Button>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col width="full">
+              <Card>
+                <Card.Content>
+                    <Card.Heading>What do you think?</Card.Heading>
+                    <Card.Description>Can you think of how this could help with public health?  </Card.Description>
+                  </Card.Content>
+                </Card>
+          
+          
+              </Col>
+          
+           
+            </Row>
+          </Container>
+
        
         </>
     )
