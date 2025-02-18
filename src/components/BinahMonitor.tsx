@@ -79,14 +79,14 @@ const VideoAndStatsWrapper = styled(Flex)<{ isMobile: boolean }>`
 
 const VideoWrapper = styled.div`
   width: 100%;
-  height: 80%;
+  height: 100%;
   z-index: -1;
 `;
 
 const Img = styled.img<{ isDesktop: boolean }>`
   position: absolute;
   width: 100%;
-  height: 80%;
+  height: 100%;
   z-index: 1;
   object-fit: ${({ isDesktop }) => (isDesktop ? 'contain' : 'cover')};
 `;
