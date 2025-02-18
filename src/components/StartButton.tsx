@@ -34,7 +34,7 @@ const Icon = styled.img`
   padding: 12px;
   color: white;
   ${media.tablet`
-    padding: 32px;
+    padding: 12px;
   `}
 `;
 
