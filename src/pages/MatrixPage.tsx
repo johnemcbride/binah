@@ -1,7 +1,7 @@
 import React from "react"
 import styled from 'styled-components';
 import media from '../style/media';
-import { Button, Container, Hero, Header, Row, Col, Card } from 'nhsuk-react-components';
+import { Button, Container, Hero, Header, Row, Col, Card, Table } from 'nhsuk-react-components';
 
 import { useNavigate } from "react-router-dom";
 enum COLOR {
@@ -187,6 +187,8 @@ const MatrixPage = ({vitalSigns}) => {
     const breathingRate = vitalSigns?.breathingRate?.value || null
     const heartRate = vitalSigns?.heartRate?.value || null
     const systolic = vitalSigns?.bloodPressure?.value?.systolic || null
+    const dystolic = vitalSigns?.bloodPressure?.value?.dystolic || null
+    const hemoglobinA1c = vitalSigns?.hemoglobinA1c?.value || null
 
     const score = calculateNewsScore(breathingRate,null,null,null,systolic,heartRate)
     const finalScore = score.respirationRateScore + score.spo2Scale1Score + score.spo2Scale2Score + score.airOxygenScore + score.systolicBPScore + score.pulseScore
@@ -195,6 +197,9 @@ const MatrixPage = ({vitalSigns}) => {
     const bRMP = getBreathRateMatrixPoint(breathingRate)
     const bpMP = getBloodPressureMatrixPoint(systolic)
     const hMP = getHemoglobinMatrixPoint(vitalSigns?.hemoglobinA1c?.value)
+
+
+    const hasData = breathingRate || heartRate || systolic || hemoglobinA1c || dystolic;
 
     return (
         <>
@@ -208,13 +213,32 @@ const MatrixPage = ({vitalSigns}) => {
           </Header>
 
              <Container>
+
+             {!hasData ? (
+          <Row>
+            <Col width="full">
+              <Card>
+                <Card.Content>
+                  <Card.Heading>Error</Card.Heading>
+                  <Card.Description>No vital signs data found. Please try again. 
+                     <strong> Make sure that you hold your face centered in phone screen for more than one minute before pressing stop.</strong></Card.Description>
+                  <Button onClick={() => navigate("/")}>Retry</Button>
+                </Card.Content>
+              </Card>
+            </Col>
+          </Row>
+        ) :
+
+        (<>
             <Row>
               <Col width="full">
               <Card>
                 <Card.Content>
                     <Card.Heading>View Your Results</Card.Heading>
-                    <Card.Description>Depending on the quality of your camera this app should have picked up your breathing rate, pulse, blood pressure and even blood sugar (Heomoglobin A1C). 
+                    <Card.Description>Depending on the quality of your camera this app should have picked up your breathing rate, 
+                      pulse, blood pressure and even blood sugar (Hemoglobin A1C). 
                       
+                      The table below shows the values read for each vital sign.
                       The chart below shows where your reading fell within normal ranges.  </Card.Description>
                   </Card.Content>
                 </Card>
@@ -224,6 +248,52 @@ const MatrixPage = ({vitalSigns}) => {
           
            
             </Row>
+
+            <Row>
+              <Col width="full">
+                <Card>
+                  <Card.Content>
+                    <Card.Heading>Vital Signs</Card.Heading>
+                    <Table>
+                      <Table.Head>
+                        <Table.Row>
+                          <Table.Cell>Parameter</Table.Cell>
+                          <Table.Cell>Value</Table.Cell>
+                        </Table.Row>
+                      </Table.Head>
+                      <Table.Body>
+                        {breathingRate && (
+                          <Table.Row>
+                            <Table.Cell>Breathing Rate</Table.Cell>
+                            <Table.Cell>{breathingRate} breathes per minute</Table.Cell>
+                          </Table.Row>
+                        )}
+                        {heartRate && (
+                          <Table.Row>
+                            <Table.Cell>Heart Rate</Table.Cell>
+                            <Table.Cell>{heartRate} beats per minute</Table.Cell>
+                          </Table.Row>
+                        )}
+                        {systolic && dystolic && (
+                          <Table.Row>
+                            <Table.Cell>Blood Pressure</Table.Cell>
+                            <Table.Cell>{systolic} over {dystolic}</Table.Cell>
+                          </Table.Row>
+                        )}
+
+                    {hemoglobinA1c && (
+                          <Table.Row>
+                            <Table.Cell>Hemoglobin A1C</Table.Cell>
+                            <Table.Cell>{hemoglobinA1c}%</Table.Cell>
+                          </Table.Row>
+                        )}  
+                      </Table.Body>
+                    </Table>
+                  </Card.Content>
+                </Card>
+              </Col>
+            </Row>
+
             <Row>
               <Col width="full">
             
@@ -314,7 +384,7 @@ const MatrixPage = ({vitalSigns}) => {
               </Col>
           
            
-            </Row>
+            </Row></>)}
           </Container>
 
        
