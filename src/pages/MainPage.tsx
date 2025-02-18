@@ -75,16 +75,7 @@ const MainPage = ({setVitalSigns}) => {
           <Header.Logo href="/" />
           
         </Header.Container>
-        <Header.Nav>
-
-              <Header.NavItem
-                home
-                href="/"
-              >
-                Home
-              </Header.NavItem>
-              {/* <Header.NavDropdownMenu /> */}
-            </Header.Nav>
+      
         </Header>
     <BinahContainer isSettingsOpen={isSettingsOpen}>
       <BinahMonitor
