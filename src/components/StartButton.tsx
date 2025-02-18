@@ -21,7 +21,8 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #01061b;
+  // background-color: #01061b;
+  background-color: #135CB4	;
   border-radius: 50%;
   cursor: pointer;
   height: inherit;
@@ -29,8 +30,9 @@ const Button = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 100%;
-  padding: 52px;
+  width: 80%;
+  padding: 12px;
+  color: white;
   ${media.tablet`
     padding: 32px;
   `}
