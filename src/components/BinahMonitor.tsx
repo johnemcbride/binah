@@ -67,7 +67,7 @@ const VideoAndStatsWrapper = styled(Flex)<{ isMobile: boolean }>`
   position: relative;
   justify-content: center;
   width: 100%;
-  height: ${({ isMobile }) => isMobile && '100%'};
+  height: ${({ isMobile }) => isMobile && '80%'};
   ${media.tablet`
     width: 812px;
     height: 609px;
