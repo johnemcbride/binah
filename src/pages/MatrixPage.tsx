@@ -187,7 +187,7 @@ const MatrixPage = ({vitalSigns}) => {
     const breathingRate = vitalSigns?.breathingRate?.value || null
     const heartRate = vitalSigns?.heartRate?.value || null
     const systolic = vitalSigns?.bloodPressure?.value?.systolic || null
-    const dystolic = vitalSigns?.bloodPressure?.value?.dystolic || null
+    const dystolic = vitalSigns?.bloodPressure?.value?.diastolic || null
     const hemoglobinA1c = vitalSigns?.hemoglobinA1c?.value || null
 
     const score = calculateNewsScore(breathingRate,null,null,null,systolic,heartRate)
