@@ -1,5 +1,5 @@
 // src/index.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GlobalStyle from './style/global';
@@ -16,6 +16,23 @@ const Wrapper = styled.div`
 
 function AppRoot() {
   const [vitalSigns, setVitalSigns] = useState<object>({});
+
+
+    // Load data from local storage on component mount
+    useEffect(() => {
+      const savedVitalSigns = localStorage.getItem("vitalSigns");
+      if (savedVitalSigns) {
+          setVitalSigns(JSON.parse(savedVitalSigns));
+      }
+  }, []);
+
+  // Save to localStorage whenever vitalSigns changes
+  useEffect(() => {
+      if (vitalSigns && Object.keys(vitalSigns).length > 0) {
+          localStorage.setItem("vitalSigns", JSON.stringify(vitalSigns));
+          setVitalSigns(vitalSigns); // Update state
+      }
+  }, [vitalSigns]);
 
   const setVitalSignsHandler = (newVitalSigns: object) => {
     console.log('newVitalSigns', newVitalSigns);
