@@ -6,16 +6,11 @@ import { Link } from 'react-router-dom';
 const WelcomePage = () => {
   return (
     <>
-
   <Header>
     <Header.Container>
       <Header.Logo href="/" />
-      
     </Header.Container>
-  
   </Header>
-
-
         <Hero>
           <Hero.Heading>Welcome to the Vital Signs AI Demo</Hero.Heading>
           <Hero.Text>
@@ -24,7 +19,6 @@ const WelcomePage = () => {
             for public health screenings, remote diagnostics, and more!
           </Hero.Text>
         </Hero>
-
         <Container>
   <Row>
     <Col width="full">
@@ -37,8 +31,6 @@ const WelcomePage = () => {
             design showing future possibilities for healthcare.</Card.Description>
         </Card.Content>
       </Card>
-
-
         <Button as="a" href="/main">
           Start the Demo
         </Button>
