@@ -265,7 +265,7 @@ const MatrixPage = ({vitalSigns}) => {
                         {breathingRate && (
                           <Table.Row>
                             <Table.Cell>Breathing Rate</Table.Cell>
-                            <Table.Cell>{breathingRate} breathes per minute</Table.Cell>
+                            <Table.Cell>{breathingRate} breaths per minute</Table.Cell>
                           </Table.Row>
                         )}
                         {heartRate && (
