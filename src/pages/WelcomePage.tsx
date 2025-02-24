@@ -8,7 +8,7 @@ const WelcomePage = () => {
     <>
   <Header>
     <Header.Container>
-      <Header.Logo href="/" />
+      {/* <Header.Logo href="/" /> */}
     </Header.Container>
   </Header>
         <Hero>

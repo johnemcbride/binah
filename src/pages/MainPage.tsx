@@ -72,7 +72,7 @@ const MainPage = ({setVitalSigns}) => {
     <>
     <Header>
         <Header.Container>
-          <Header.Logo href="/" />
+          {/* <Header.Logo href="/" /> */}
           
         </Header.Container>
       
