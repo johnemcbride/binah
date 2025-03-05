@@ -200,7 +200,7 @@ const useMonitor = (
           onError,
           onWarning,
           onStateChange,
-          orientation: DeviceOrientation.PORTRAIT,
+          //orientation: DeviceOrientation.PORTRAIT,
           /*******************************************************************************
            * For accurate vital signs calculation the user's parameters should be provided.
            * The following is an example of how the parameters are passed to the SDK:
