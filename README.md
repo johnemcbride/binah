@@ -15,6 +15,15 @@ To get started quickly without entering the license key in the UI:
    ```
 2. **Install dependencies and run the app as described below.**
 
+- If you want to pre-set the license key in code (not recommended for production), you can set the default value in `src/hooks/useLicenseDetails.ts`:
+   ```js
+   export const useLicenseKey = createLocalStorageStateHook(
+     "licenseKey",
+     "YOUR_LICENSE_KEY"
+   );
+   ```
+- However, do **not** commit real license keys to version control.
+
 ---
 
 
