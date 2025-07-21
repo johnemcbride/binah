@@ -10,7 +10,7 @@ This project is a demonstration tool for the [Binah AI](https://www.binah.ai/) p
 graph TD
   A[User Device/Browser] -->|Camera Access| B[React App]
   B -->|Initializes| C[Binah Web SDK (WASM)]
-  C -->|Processes Video| D[WASM/JS Processing]
+  C -->|Processes Video| D[WASM Processing]
   D -->|Vital Signs| E[React UI Components]
   E -->|Display Results| A
   B -->|Routing| F[React Router]
