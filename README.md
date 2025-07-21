@@ -4,6 +4,37 @@ This project is a demonstration tool for the [Binah AI](https://www.binah.ai/) p
 
 ---
 
+## 📝 Quick Start: Cloning & Pre-setting the License Key
+
+To get started quickly without entering the license key in the UI:
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd <your-repo-directory>
+   ```
+2. **Install dependencies and run the app as described below.**
+3. **Set the license key in your browser's localStorage:**
+   - Open your app in the browser.
+   - Open the browser console (F12 or right-click → Inspect → Console).
+   - Run this command, replacing `YOUR_LICENSE_KEY` with your actual key:
+     ```js
+     localStorage.setItem('licenseKey', 'YOUR_LICENSE_KEY');
+     ```
+   - Refresh the page. The app will now use this license key automatically.
+
+> **Note:**
+> - This method is for development/demo purposes. For production, always keep your license key secure.
+> - If you want to pre-set the license key in code (not recommended for production), you can set the default value in `src/hooks/useLicenseDetails.ts`:
+>   ```js
+>   export const useLicenseKey = createLocalStorageStateHook(
+>     "licenseKey",
+>     "YOUR_LICENSE_KEY"
+>   );
+>   ```
+> - However, do **not** commit real license keys to version control.
+
+---
 
 
 ## 🧑‍💻 Tech Stack & Key Features
