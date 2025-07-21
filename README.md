@@ -4,21 +4,7 @@ This project is a demonstration tool for the [Binah AI](https://www.binah.ai/) p
 
 ---
 
-## 🏗️ Architecture Overview
 
-```mermaid
-graph TD
-  A[User Device/Browser] -->|Camera Access| B[React App]
-  B -->|Initializes| C[Binah Web SDK WASM]
-  C -->|Processes Video| D[WASM Processing]
-  D -->|Vital Signs| E[React UI Components]
-  E -->|Display Results| A
-  B -->|Routing| F[React Router]
-  B -->|Styling| G[NHS UK CSS & styled-components]
-  C -->|Model Files| H[public/models/*.bin]
-```
-
----
 
 ## 🧑‍💻 Tech Stack & Key Features
 
